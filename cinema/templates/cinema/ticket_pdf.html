@@ -1,0 +1,26 @@
+<!-- cinema/templates/cinema/ticket_pdf.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ticket {{ booking.ticket_id }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #fff; color: #000; }
+    .ticket { border: 2px solid #ffd369; padding: 20px; width: 450px; margin: auto; }
+    .title { font-size: 1.8rem; color: #ffd369; font-weight: bold; margin-bottom: 10px; }
+    .info { margin: 8px 0; font-size: 1rem; }
+    .price { font-weight: bold; font-size: 1.2rem; margin-top: 10px; }
+  </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="title">{{ booking.show.movie.title }}</div>
+        <div class="info">📅 Date: {{ booking.show.date }}</div>
+        <div class="info">⏰ Time: {{ booking.show.time }}</div>
+        <div class="info">💺 Seats: {{ booking.seats|join:", " }}</div>
+        <div class="info">Ticket ID: {{ booking.ticket_id }}</div>
+        <div class="price">₹ {{ booking.total_cost }}</div>
+    </div>
+      
+</body>
+</html>

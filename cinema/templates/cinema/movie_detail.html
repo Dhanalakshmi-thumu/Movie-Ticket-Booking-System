@@ -1,0 +1,35 @@
+{% extends 'cinema/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    {% if movie.poster %}
+      <img src="{{ movie.poster.url }}" class="img-fluid rounded">
+    {% endif %}
+  </div>
+  <div class="col-md-8">
+    <h2>{{ movie.title }}</h2>
+    <p>{{ movie.description }}</p>
+    <p>Duration: {{ movie.duration }} min — Rating: {{ movie.rating }} — MRP: ₹{{ movie.mrp }}</p>
+    <h5>Upcoming Shows</h5>
+    {% if shows %}
+      <div class="list-group">
+        {% for show in shows %}
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ show.date }} {{ show.time }}</strong><br>
+              Duration {{ show.duration }} min
+            </div>
+            <div>
+              <span class="me-3">Gold ₹{{ show.gold_price }}</span>
+              <span class="me-3">Silver ₹{{ show.silver_price }}</span>
+              <a href="{% url 'select_seats' show.id %}" class="btn btn-success">Select Seats</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No shows scheduled.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

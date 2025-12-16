@@ -1,0 +1,341 @@
+/* ===========================
+   GLOBAL STYLES
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+html { scroll-behavior: smooth; }
+
+* { 
+    box-sizing: border-box; 
+    cursor: default; 
+   
+}
+
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background: linear-gradient(180deg, #0d0d0f 0%, #1a1a1a 100%);
+    color: #e8e8e8; 
+    margin: 0; 
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #ffd369; border-radius: 5px; }
+
+a, button, .card, .slide-card, .seat { cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+
+/* Gold Utilities */
+.text-gold { color: #ffd369; }
+.gold-glow { color: #ffd369; text-shadow: 0 0 10px rgba(255,215,100,0.6); }
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar { 
+    background: #111 !important; 
+    border-bottom: 1px solid #c89d2a; 
+    box-shadow: 0 4px 15px rgba(200,157,42,0.2); 
+}
+.navbar-brand { font-size: 26px; font-weight: 700; color: #c89d2a !important; }
+.nav-link { color: #d7d7d7 !important; font-weight: 500; }
+.nav-link.active, .nav-link:hover { 
+    color: #ffd369 !important; 
+    text-shadow: 0 0 8px rgba(255,215,105,0.7);
+}
+
+/* ===========================
+   FEATURED CAROUSEL
+=========================== */
+.carousel-img { 
+    height: 75vh; 
+    object-fit: cover; 
+    filter: brightness(0.55); 
+}
+
+/* Carousel Overlay */
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 100px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+    text-align: center;
+}
+
+/* Unified carousel content block */
+.carousel-content {
+    background: rgba(0, 0, 0, 0.75);
+    padding: 20px 36px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 45px rgba(0,0,0,0.85);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.carousel-content:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 50px rgba(255, 215, 105, 0.7), 0 0 25px rgba(255, 215, 105, 0.5);
+}
+
+/* Carousel Title - smaller */
+.carousel-title {
+    font-size: 0.9rem;   /* smaller than before */
+    padding: 8px 20px;   /* less padding */
+    border-radius: 10px;
+}
+
+/* Book Now Button - smaller */
+.btn-gold {
+    padding: 8px 20px;   /* reduce size */
+    font-size: 0.85rem;  /* smaller text */
+    border-radius: 10px;
+}
+.btn-gold:hover {
+    transform: scale(1.05); /* slightly smaller hover scale */
+    box-shadow: 0 0 35px rgba(255, 215, 105, 0.6), 0 0 15px rgba(255, 215, 105, 0.4);
+}
+
+
+/* Flicker Animation */
+@keyframes flicker {
+    0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }
+    20%,22%,24%,55% { opacity: 0.4; }
+}
+
+/* Carousel Button */
+.btn-gold {
+    background: #000;
+    color: #ffd369;
+    letter-spacing: 1px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+.btn-gold::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -25%;
+    width: 50%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(25deg);
+    transition: all 0.7s ease;
+}
+
+/* ===========================
+   MOVIE CARDS (FINAL FIX)
+=========================== */
+
+.card {
+    background: #000;
+    border-radius: 14px;
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Card hover ONLY */
+.card:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8),
+                0 0 20px rgba(255,211,105,0.35);
+}
+
+.movie-poster {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* CARD BODY — NO ANIMATION, NO MOVEMENT */
+.card-body {
+    position: static;
+    transform: none;
+    opacity: 1;
+    transition: none;
+    background: #000;
+    padding: 14px;
+}
+
+/* Ensure hover never touches text */
+.card:hover .card-body {
+    transform: none;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffd369;
+}
+
+.card-body p {
+    font-size: 0.8rem;
+    color: #ccc;
+    margin-bottom: 2px;
+}
+
+
+
+/* ===========================
+   BUTTONS
+=========================== */
+.btn-warning {
+    background: linear-gradient(145deg, #ffd369, #d4a017);
+    border: none;
+    color: #000;
+    font-weight: 600;
+    border-radius: 10px;
+}
+.btn-warning:hover {
+    background: #ffe08a;
+    box-shadow: 0 0 18px rgba(255,215,120,0.7);
+}
+
+/* ===========================
+   SEAT SELECTION
+=========================== */
+.seat-line { display: flex; justify-content: center; gap: 12px; }
+.seat { 
+    width: 52px; height: 52px; 
+    display: inline-flex; justify-content: center; align-items: center; 
+    border-radius: 10px; font-weight: 600; transition: 0.25s; 
+}
+.seat.gold { background: linear-gradient(145deg, #ffd369, #d4a017); }
+.seat.silver { background: linear-gradient(145deg, #d7d7d7, #bfbfbf); }
+.seat.selected { border: 2px solid #00eaff; box-shadow: 0 0 15px rgba(0,255,255,0.9); animation: seatGlow 1s infinite alternate; }
+.seat.booked { background: #333; color: #888; cursor: not-allowed; }
+.seat.gold:hover, .seat.silver:hover { transform: scale(1.12); box-shadow: 0 0 20px rgba(255, 215, 105,0.8); }
+@keyframes seatGlow { 0% { box-shadow: 0 0 15px rgba(0,255,255,0.9); } 100% { box-shadow: 0 0 25px rgba(0,255,255,1); } }
+
+/* ===========================
+   CHOICE / INFO CARDS
+=========================== */
+.choose-box {
+    background: #111;
+    border-radius: 14px;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+.choose-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(255,215,100,0.5);
+}
+.choose-box h6 { color: #ffd369; }
+
+/* ===========================
+   CHECKOUT / SUCCESS BOXES
+=========================== */
+.checkout-box, .success-box {
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    border-left: 6px solid #ffd369;
+    border-radius: 14px;
+    padding: 22px 25px;
+    box-shadow: 0 0 20px rgba(255, 210, 90, 0.1);
+    color: #f0f0f0;
+    transition: 0.3s;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 0.6s forwards;
+}
+@keyframes slideUp { to { transform: translateY(0); opacity: 1; } }
+
+.checkout-title, .success-box h2 {
+    color: #ffd369;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 22px;
+}
+
+/* Buttons in checkout / success */
+.btn-back { background: #2b2b2b; border: 1px solid #444; color: #ddd; padding: 10px 18px; border-radius: 10px; }
+.btn-back:hover { background: #3a3a3a; }
+
+
+
+/* Center only auth pages */
+.auth-page {
+    min-height: calc(100vh - 120px); /* navbar + footer safe */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Remove auto margin */
+.login-card,
+.signup-card {
+    margin: 0;
+}
+/* ===========================
+   CUSTOMER REVIEWS
+=========================== */
+
+.reviews-section {
+    background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
+}
+
+#reviewCarousel {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+#reviewCarousel .carousel-inner {
+    min-height: 140px; /* prevents jump */
+}
+
+.review-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #eee;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.review-user {
+    color: #ffd369;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+
+.carousel-item.active img {
+    animation: zoomHero 6s ease-in-out forwards;
+}
+
+
+
+
+.carousel-item.active img {
+    animation: zoomHero 6s ease-in-out forwards;
+}
+
+@keyframes zoomHero {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+}
+
+
+
+
+
+
+/* FINAL CARD STABILITY FIX */
+.card,
+.card * {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body {
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
+}

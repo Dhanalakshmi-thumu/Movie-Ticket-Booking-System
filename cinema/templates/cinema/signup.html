@@ -1,0 +1,103 @@
+{% extends 'cinema/base.html' %}
+
+{% block head %}
+<style>
+/* Page background */
+body {
+    background: #0d0d0d;
+}
+
+/* Centered signup card */
+.signup-card {
+    max-width: 400px;
+    margin: 80px auto;
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    border-left: 6px solid #ffd369;
+    border-radius: 16px;
+    padding: 30px 25px;
+    box-shadow: 0 0 25px rgba(255, 215, 120, 0.1);
+    color: #f5f5f5;
+    transition: 0.3s;
+}
+.signup-card:hover {
+    box-shadow: 0 0 40px rgba(255, 215, 120, 0.2);
+}
+
+/* Title */
+.signup-card h3 {
+    color: #ffd369;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Input fields */
+.signup-card input[type="text"],
+.signup-card input[type="email"],
+.signup-card input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #555;
+    background: #1a1a1a;
+    color: #f5f5f5;
+    transition: 0.25s;
+}
+.signup-card input:focus {
+    border-color: #ffd369;
+    box-shadow: 0 0 10px rgba(255, 215, 100, 0.5);
+    outline: none;
+}
+
+/* Signup button */
+.btn-gold {
+    width: 100%;
+    padding: 12px;
+    font-weight: 700;
+    background: linear-gradient(145deg, #ffd369, #e2b44c);
+    color: black;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255, 215, 120, 0.4);
+    transition: 0.3s;
+}
+.btn-gold:hover {
+    background: #ffe89b;
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(255, 215, 120, 0.7);
+}
+
+/* Login link */
+.login-link {
+    color: #ffd369;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+.login-link:hover {
+    color: #ffecb3;
+    text-decoration: underline;
+}
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="signup-card">
+  
+    <h3>Create Account</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn-gold" type="submit">Sign Up</button>
+    </form>
+    <a href="{% url 'login' %}" class="login-link">Already have an account? Login</a>
+</div>
+</div>
+{% endblock %}

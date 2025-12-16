@@ -1,0 +1,165 @@
+{% extends 'cinema/base.html' %}
+
+{% block content %}
+<style>
+  /* Booking list spacing */
+  #bookingList {
+      display: flex;
+      flex-direction: column;
+      gap: 26px; /* 🔥 attractive gap */
+  }
+  
+  /* Ticket card base */
+  .ticket-card {
+      background: linear-gradient(145deg, #141414, #0b0b0b);
+      border-radius: 18px;
+      padding: 22px 26px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+      border-left: 5px solid rgba(255, 215, 105, 0.6);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+  }
+  
+  /* Subtle glow line */
+  .ticket-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,215,105,0.6), transparent);
+  }
+  
+  /* Hover effect */
+  .ticket-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow:
+          0 14px 45px rgba(0,0,0,0.9),
+          0 0 25px rgba(255,215,105,0.25);
+  }
+  
+  /* Movie name */
+  .movie-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffd369;
+      letter-spacing: 0.5px;
+  }
+  
+  /* Ticket info text */
+  .ticket-info {
+      font-size: 0.9rem;
+      color: #cfcfcf;
+  }
+  
+  /* Seat highlight */
+  .seat-highlight {
+      color: #ffdf9e;
+      font-weight: 600;
+  }
+  
+  /* Ticket ID */
+  .ticket-id {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 6px;
+  }
+  
+  /* Price box */
+  .price-box {
+      background: linear-gradient(145deg, #ffd369, #c89d2a);
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 0 15px rgba(255,215,105,0.45);
+  }
+  
+  /* No bookings */
+  .no-bookings {
+      text-align: center;
+      color: #aaa;
+      font-size: 1.1rem;
+      margin-top: 40px;
+  }
+  
+  /* Search box polish */
+  .search-box {
+      max-width: 320px;
+      border-radius: 14px;
+      background:  #eee;
+      border: 1px solid #444;
+      color: #eee;
+  }
+  .search-box:focus {
+      border-color: #ffd369;
+      box-shadow: 0 0 12px rgba(255,215,105,0.5);
+  }
+  </style>
+  
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+  <h2 class="gold-title mb-0">🎟 Your Booking History</h2>
+  <input
+    type="text"
+    id="bookingSearch"
+    class="form-control search-box"
+    placeholder="Search by movie, date or ticket ID..."
+  >
+</div>
+
+{% if bookings %}
+  <div id="bookingList">
+    {% for b in bookings %}
+      <div class="ticket-card booking-item">
+
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+
+          <!-- LEFT -->
+          <div>
+            <div class="movie-name">{{ b.show.movie.title }}</div>
+            <div class="ticket-info mt-1">
+              📅 {{ b.show.date }} &nbsp; ⏰ {{ b.show.time }}
+            </div>
+            <div class="ticket-info mt-1">
+              💺 Seats: <span class="seat-highlight">{{ b.seats|join:", " }}</span>
+            </div>
+            <div class="ticket-id">Ticket ID: {{ b.ticket_id }}</div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="d-flex flex-column gap-2 align-items-end">
+            <div class="price-box">₹ {{ b.total_cost }}</div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2">
+              <a href="{% url 'download_ticket' b.id %}" class="btn btn-gold btn-sm">
+                📄 Download PDF
+              </a>
+              <form method="post" action="{% url 'cancel_booking' b.id %}" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">❌ Cancel</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="no-bookings">You have no bookings yet.</p>
+{% endif %}
+
+<script>
+const searchInput = document.getElementById("bookingSearch");
+const bookings = document.querySelectorAll(".booking-item");
+
+searchInput.addEventListener("keyup", function () {
+  const query = this.value.toLowerCase();
+  bookings.forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(query) ? "block" : "none";
+  });
+});
+</script>
+
+{% endblock %}

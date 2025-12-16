@@ -1,0 +1,103 @@
+{% extends 'cinema/base.html' %}
+
+{% block head %}
+<style>
+/* Page Background */
+body {
+    background: #0d0d0d;
+}
+
+/* Golden heading */
+.checkout-title {
+    color: #ffd369;
+    font-weight: 800;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Checkout Box */
+.checkout-box {
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    border: 1px solid #2b2b2b;
+    border-left: 6px solid #ffd369;
+    border-radius: 14px;
+    padding: 22px 25px;
+    color: #f0f0f0;
+    box-shadow: 0 0 20px rgba(255, 210, 90, 0.1);
+    transition: 0.3s;
+}
+.checkout-box:hover {
+    box-shadow: 0 0 28px rgba(255, 210, 90, 0.25);
+}
+
+/* Labels */
+.checkout-info strong {
+    color: #ffd369;
+}
+
+/* Golden button */
+.btn-gold {
+    background: linear-gradient(145deg, #ffd369, #e8b954);
+    border: none;
+    color: black;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255, 215, 120, 0.4);
+    transition: 0.3s;
+}
+.btn-gold:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 120, 0.7);
+    transform: translateY(-2px);
+}
+
+/* Silver/Back button */
+.btn-back {
+    background: #2b2b2b;
+    border: 1px solid #444;
+    color: #ddd;
+    padding: 10px 18px;
+    border-radius: 10px;
+}
+.btn-back:hover {
+    background: #3a3a3a;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="checkout-title">Checkout</h2>
+
+<div class="checkout-box">
+
+    <div class="checkout-info">
+
+        <p><strong>Movie:</strong> {{ show.movie.title }}</p>
+
+        <p><strong>Show:</strong> 
+            {{ show.date }} &nbsp; | &nbsp; {{ show.time }}
+        </p>
+
+        <p><strong>Seats:</strong> 
+            <span style="color:#00eaff;">{{ seats|join:", " }}</span>
+        </p>
+
+        <p style="font-size:1.2rem;">
+            <strong>Total Amount:</strong>
+            <span style="color:#ffd369; font-size:1.4rem;">₹{{ total }}</span>
+        </p>
+
+    </div>
+
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn-gold">Confirm Booking</button>
+        <a href="{% url 'select_seats' show.id %}" class="btn-back ms-2">Back</a>
+    </form>
+
+</div>
+
+{% endblock %}

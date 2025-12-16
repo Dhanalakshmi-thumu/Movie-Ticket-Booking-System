@@ -1,0 +1,86 @@
+{% extends 'cinema/base.html' %}
+
+{% block head %}
+<style>
+/* Page Background */
+body {
+    background: #0d0d0d;
+}
+
+/* Success container */
+.success-box {
+    max-width: 600px;
+    margin: 60px auto;
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    border-left: 6px solid #ffd369;
+    border-radius: 16px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(255, 215, 120, 0.15);
+    color: #f5f5f5;
+    transition: 0.3s;
+}
+.success-box:hover {
+    box-shadow: 0 0 40px rgba(255, 215, 120, 0.3);
+}
+
+/* Success Icon */
+.success-icon {
+    font-size: 80px;
+    color: #2ecc71;
+    margin-bottom: 20px;
+    animation: pop 0.5s ease-out;
+}
+
+/* Pop Animation */
+@keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Movie / Ticket Info */
+.success-info p {
+    font-size: 1.1rem;
+    margin: 8px 0;
+}
+.success-info strong {
+    color: #ffd369;
+}
+
+/* Back to Home Button */
+.btn-gold {
+    background: linear-gradient(145deg, #ffd369, #e2b44c);
+    color: black;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: none;
+    box-shadow: 0 0 15px rgba(255, 215, 120, 0.4);
+    transition: 0.3s;
+}
+.btn-gold:hover {
+    background: #ffe89b;
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(255, 215, 120, 0.6);
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-box">
+    <div class="success-icon">✔</div>
+    <h2 class="mb-3" style="color:#ffd369;">Booking Confirmed!</h2>
+
+    <div class="success-info">
+        <p>Ticket ID: <strong>{{ booking.ticket_id }}</strong></p>
+        <p>Movie: <strong>{{ booking.show.movie.title }}</strong></p>
+        <p>Show: <strong>{{ booking.show.date }} {{ booking.show.time }}</strong></p>
+        <p>Seats: <strong style="color:#00eaff;">{{ booking.seats|join:", " }}</strong></p>
+        <p>Total Paid: <strong>₹{{ booking.total_cost }}</strong></p>
+    </div>
+
+    <a href="{% url 'home' %}" class="btn btn-gold">Back to Home</a>
+</div>
+{% endblock %}

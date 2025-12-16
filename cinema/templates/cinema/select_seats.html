@@ -1,0 +1,114 @@
+{% extends 'cinema/base.html' %}
+
+{% block title %}Select Seats{% endblock %}
+
+{% block content %}
+<div class="seat-selection-page">
+
+    <h2 class="gold-title text-center mb-3">
+        Select Seats — {{ show.movie.title }}
+    </h2>
+
+    <div class="screen-box">SCREEN THIS SIDE</div>
+
+    <div class="seat-container">
+
+        <!-- GOLD -->
+        <div class="seat-section">
+            <div class="section-label">GOLD — ₹{{ show.gold_price }}</div>
+            {% for row in gold_rows %}
+            <div class="seat-line">
+                {% for s in row %}
+                <div class="seat gold {% if s in booked %}booked{% endif %}"
+                data-seat="{{ s }}"
+                data-price="{{ show.gold_price }}">
+                {{ s }}
+            </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- SILVER -->
+        <div class="seat-section">
+            <div class="section-label">SILVER — ₹{{ show.silver_price }}</div>
+            {% for row in silver_rows %}
+            <div class="seat-line">
+                {% for s in row %}
+                <div class="seat silver {% if s in booked %}booked{% endif %}"
+                data-seat="{{ s }}"
+                data-price="{{ show.silver_price }}">
+               {{ s }}
+           </div>
+           
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <h5>Total: ₹<span id="total">0</span></h5>
+        
+            <button id="continueBtn" class="btn btn-gold mt-2" disabled>
+                Continue to Checkout
+            </button>
+        </div>
+        
+
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(function () {
+
+    let selectedSeats = [];
+    let total = 0;
+
+    // Seat click
+    $('.seat').not('.booked').on('click', function () {
+        const seat = $(this).data('seat');
+        const price = parseInt($(this).data('price'));
+
+        $(this).toggleClass('selected');
+
+        if ($(this).hasClass('selected')) {
+            selectedSeats.push(seat);
+            total += price;
+        } else {
+            selectedSeats = selectedSeats.filter(s => s !== seat);
+            total -= price;
+        }
+
+        $('#total').text(total);
+        $('#continueBtn').prop('disabled', selectedSeats.length === 0);
+    });
+
+    // CONTINUE → CHECKOUT (AJAX)
+    $('#continueBtn').on('click', function () {
+
+        $.ajax({
+            url: "",   // same URL: /show/<id>/select-seats/
+            type: "POST",
+            data: {
+                'seats[]': selectedSeats,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+                if (response.success) {
+                    // ✅ THIS IS THE IMPORTANT PART
+                    window.location.href = response.redirect;
+                } else {
+                    alert(response.message || "Seat selection failed");
+                }
+            },
+            error: function () {
+                alert("Server error. Try again.");
+            }
+        });
+
+    });
+
+});
+</script>
+{% endblock %}
