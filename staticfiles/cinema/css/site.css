@@ -373,16 +373,14 @@ a { text-decoration: none; color: inherit; }
 
 
 
-/* ===== FORCE PREMIUM CARD OVERRIDE ===== */
-.card {
-    background: linear-gradient(180deg, #0e0e0e, #000) !important;
-    border-radius: 20px !important;
-    border: 1px solid rgba(255, 211, 105, 0.18) !important;
+/* FINAL CARD STABILITY FIX */
+.card,
+.card * {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-img-top.movie-poster {
-    height: 340px !important;
-    object-fit: contain !important;
-    padding: 14px !important;
-    background: radial-gradient(circle at top, #1c1c1c, #000) !important;
+.card-body {
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
 }
