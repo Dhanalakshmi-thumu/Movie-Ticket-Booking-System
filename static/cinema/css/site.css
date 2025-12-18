@@ -386,3 +386,37 @@ a { text-decoration: none; color: inherit; }
     padding: 14px !important;
     background: radial-gradient(circle at top, #1c1c1c, #000) !important;
 }
+
+
+/* ===========================
+   UPCOMING SHOWS – PREMIUM STYLE
+=========================== */
+
+.list-group-item {
+    background: linear-gradient(145deg, #111, #0a0a0a) !important;
+    border: 1px solid rgba(255, 211, 105, 0.25) !important;
+    border-radius: 16px !important;
+    padding: 18px 20px !important;
+    color: #e8e8e8 !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7) !important;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.list-group-item:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.9),
+        0 0 25px rgba(255, 211, 105, 0.45);
+}
+
+.list-group-item strong {
+    color: #ffd369 !important;
+    font-size: 1.05rem !important;
+}
+
+.list-group-item .btn-success {
+    background: linear-gradient(145deg, #ffd369, #c89d2a) !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+}

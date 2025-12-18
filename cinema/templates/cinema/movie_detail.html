@@ -6,11 +6,18 @@
       <img src="{{ movie.poster.url }}" class="img-fluid rounded">
     {% endif %}
   </div>
+
   <div class="col-md-8">
     <h2>{{ movie.title }}</h2>
     <p>{{ movie.description }}</p>
-    <p>Duration: {{ movie.duration }} min — Rating: {{ movie.rating }} — MRP: ₹{{ movie.mrp }}</p>
+    <p>
+      Duration: {{ movie.duration }} min —
+      Rating: {{ movie.rating }} —
+      MRP: ₹{{ movie.mrp }}
+    </p>
+
     <h5>Upcoming Shows</h5>
+
     {% if shows %}
       <div class="list-group">
         {% for show in shows %}
@@ -22,7 +29,9 @@
             <div>
               <span class="me-3">Gold ₹{{ show.gold_price }}</span>
               <span class="me-3">Silver ₹{{ show.silver_price }}</span>
-              <a href="{% url 'select_seats' show.id %}" class="btn btn-success">Select Seats</a>
+              <a href="{% url 'select_seats' show.id %}" class="btn btn-success">
+                Select Seats
+              </a>
             </div>
           </div>
         {% endfor %}
