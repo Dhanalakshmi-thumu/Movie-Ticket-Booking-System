@@ -1,0 +1,18 @@
+# Virtual environment
+myvirtual/
+
+# Environment variables
+.env
+
+# Database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Collected static files
+staticfiles/
+
+# Media uploads (optional for portfolio)
+media/
