@@ -1,18 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
-
 from dotenv import load_dotenv
-from django.contrib.auth import get_user_model
-
-if os.environ.get("DJANGO_SUPERUSER_USERNAME"):
-    User = get_user_model()
-    if not User.objects.filter(username=os.environ["DJANGO_SUPERUSER_USERNAME"]).exists():
-        User.objects.create_superuser(
-            os.environ["DJANGO_SUPERUSER_USERNAME"],
-            os.environ["DJANGO_SUPERUSER_EMAIL"],
-            os.environ["DJANGO_SUPERUSER_PASSWORD"]
-        )
 
 load_dotenv()
 
@@ -23,16 +12,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ===============================
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "movie-ticket-booking-system-pec0.onrender.com,127.0.0.1,localhost"
+    "127.0.0.1,localhost"
 ).split(",")
 
-
-
- 
+CSRF_TRUSTED_ORIGINS = [
+    "https://movie-ticket-booking-system-pec0.onrender.com"
+]
 
 # ===============================
 # APPLICATIONS
@@ -77,20 +66,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'movietix.wsgi.application'
 
-
 # ===============================
-# DATABASE (SQLite)
+# DATABASE (PostgreSQL on Render)
 # ===============================
-
-
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
-
-
 
 # ===============================
 # PASSWORD VALIDATION
@@ -102,7 +87,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # ===============================
 # INTERNATIONALIZATION
 # ===============================
@@ -111,20 +95,16 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
 # ===============================
 # STATIC FILES
 # ===============================
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ===============================
 # MEDIA FILES
@@ -132,13 +112,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # ===============================
 # LOGIN REDIRECTS
 # ===============================
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
