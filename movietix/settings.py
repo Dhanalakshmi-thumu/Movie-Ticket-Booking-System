@@ -1,7 +1,18 @@
 from pathlib import Path
 import os
 import dj_database_url
+
 from dotenv import load_dotenv
+from django.contrib.auth import get_user_model
+
+if os.environ.get("DJANGO_SUPERUSER_USERNAME"):
+    User = get_user_model()
+    if not User.objects.filter(username=os.environ["DJANGO_SUPERUSER_USERNAME"]).exists():
+        User.objects.create_superuser(
+            os.environ["DJANGO_SUPERUSER_USERNAME"],
+            os.environ["DJANGO_SUPERUSER_EMAIL"],
+            os.environ["DJANGO_SUPERUSER_PASSWORD"]
+        )
 
 load_dotenv()
 
